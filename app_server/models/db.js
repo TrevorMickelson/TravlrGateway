@@ -1,33 +1,51 @@
 const mongoose = require('mongoose');
 const host = process.env.DB_HOST || '127.0.0.1';
-const dbURL = `mongodb://${host}/travlr`;
-const readLine = require('readLine');
-
-mongoose.set('useUnifiedTopology', true);
+const dbURI = `mongodb://${host}/travlr`;
+const readLine = require('readline');
 
 const connect = () => {
-    setTimeout(() => mongoose.connect(dbURL, {
-        useNewUrlParser: true,
-        useCreateIndex: true
+    setTimeout(() => mongoose.connect(dbURI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true
     }), 1000);
+};
+
+mongoose.connection.on('connected', () => {
+  // ...
+});
+
+mongoose.connection.on('error', err => {
+  // ...
+});
+
+mongoose.connection.on('disconnected', () => {
+  // ...
+});
+
+if (process.platform === 'win32') {
+  // ...
 }
 
-mongoose.connection.on('connected', () => { })
+const gracefulShutdown = (msg, callback) => {
+  // ...
+};
 
-mongoose.connection.on('error', err => { })
+// For nodemon restarts
+process.once('SIGUSR2', () => {
+  // ...
+});
 
-mongoose.connection.on('disconnected', () => { })
+// For app termination
+process.on('SIGINT', () => {
+  // ...
+});
 
-if (process.platform === 'win32') { }
-
-const gracefulShutdown = (msg, callback) => { };
-
-process.once('SIGUSR2', () => { });
-
-process.once('SIGINT', () => { });
-
-process.once('SIGTERM', () => { });
+// For Heroku app termination
+process.on('SIGTERM', () => {
+  // ...
+});
 
 connect();
 
+// bring in the Mongoose schema
 require('./travlr');
