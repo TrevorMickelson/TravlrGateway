@@ -15,5 +15,8 @@
     "morgan": "~1.9.1",
     "request": "^2.88.2",
     "seedgoose": "^2.0.2"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "^16.2.5"
   }
 }
